@@ -1,11 +1,30 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
+  };
+
+  const handleButtonClick = (e) => {
+    e.preventDefault();
+    //validate form data
+    const message = checkValidData(
+      isSignInForm,
+      name?.current?.value,
+      email.current.value,
+      password.current.value
+    );
+    setErrorMessage(message);
+
+    //sign in / sign up
   };
 
   return (
@@ -26,17 +45,20 @@ const Login = () => {
             type="text"
             placeholder="Full Name"
             className="p-2 my-4 bg-gray-600 placeholder-gray-200 w-full rounded-lg"
+            ref={name}
           />
         )}
         <input
           type="text"
           placeholder="Email or Phone Number"
           className="p-2 my-4 bg-gray-600 placeholder-gray-200 w-full rounded-lg"
+          ref={email}
         />
         <input
           type="password"
           placeholder="Password"
           className="p-2 my-4 bg-gray-600 placeholder-gray-200 w-full rounded-lg"
+          ref={password}
         />
         {!isSignInForm && (
           <label>
@@ -44,7 +66,16 @@ const Login = () => {
             Service and Privacy Policy.
           </label>
         )}
-        <button type="submit" className="p-2 my-4 bg-red-700 w-full rounded-lg">
+        {errorMessage && (
+          <p className="text-red-500 p-2 my-4 w-full rounded-lg">
+            {errorMessage}
+          </p>
+        )}
+        <button
+          type="submit"
+          className="p-2 my-4 bg-red-700 w-full rounded-lg"
+          onClick={handleButtonClick}
+        >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
