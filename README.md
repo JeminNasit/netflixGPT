@@ -8,7 +8,13 @@
 - Sign up Form
 - Form Validation
 - useRef Hook
--
+- Firebase Setup
+- Deploying our app to production
+- create sign up user account
+- implement sign up and sign in user Api
+- created Redux Store with userSlice
+- implemented sign out
+- update profile
 
 # Features
 
